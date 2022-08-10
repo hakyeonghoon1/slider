@@ -145,7 +145,7 @@ const controlHandler = () => {
   const loop = document.querySelector("#loop").checked;
   const random = document.querySelector("#random").checked;
   currentIdx = 0;
-
+  removeEvent();
   option = {
     prev: button,
     next: button,
@@ -180,6 +180,7 @@ const setOption = (options) => {
     random: options.random,
   };
 };
+
 author.addEventListener("change", () => controlHandler());
 
 /* =============================사용자 설정 컨트롤러 끝===============================*/
