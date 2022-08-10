@@ -1,0 +1,19 @@
+{
+  "name": "slider",
+  "version": "1.0.0",
+  "description": "slider",
+  "main": "index.js",
+  "scripts": {
+    "test": "y"
+  },
+  "repository": {
+    "type": "git",
+    "url": "n"
+  },
+  "keywords": [
+    "slider"
+  ],
+  "author": "hakyeonghoon",
+  "license": "ISC",
+  "type": "module"
+}

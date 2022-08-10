@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+
+#slider {
+  width: 400px;
+  height: 200px;
+  position: relative;
+  margin: 50px auto;
+  overflow: hidden;
+}
+
+.slides {
+  position: absolute;
+  width: 3000px;
+  transition: left 0.5s ease-out;
+}
+
+.contents {
+  width: 400px;
+}
+
+.slides li:not(:last-child) {
+  float: left;
+  margin-right: 100px;
+}
+
+.slides li {
+  float: left;
+}
+
+.button {
+  position: relative;
+  margin: 50px auto;
+  width: 80px;
+}
+
+.author {
+  position: relative;
+  margin: 50px auto;
+  width: 400px;
+}

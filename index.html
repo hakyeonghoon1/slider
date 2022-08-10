@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="CSS/slider.css" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="slider">
+      <ul class="slides">
+        <li><img src="./Contents/img1.png" alt="1" class="contents" /></li>
+        <li><img src="./Contents/img2.png" alt="2" class="contents" /></li>
+        <li><img src="./Contents/img3.png" alt="3" class="contents" /></li>
+        <li><img src="./Contents/img4.png" alt="4" class="contents" /></li>
+        <li><img src="./Contents/img5.png" alt="5" class="contents" /></li>
+        <li>
+          <video class="contents" autoplay loop controls>
+            <source src="./Contents/sample.mp4 " type="video/mp4" />
+          </video>
+        </li>
+      </ul>
+    </div>
+    <div class="button">
+      <button class="prev">이전</button>
+      <button class="next">다음</button>
+    </div>
+    <div class="authors">
+      <label>
+        버튼 활성화
+        <input type="checkbox" id="button" class="authors" checked />
+      </label>
+      <br />
+      <label>
+        Loop 활성화 <input type="checkbox" id="loop" class="authors" />
+      </label>
+      <br />
+      <label>
+        랜덤 순서 활성화 <input type="checkbox" id="random" class="authors" />
+      </label>
+    </div>
+  </body>
+  <script type="module">
+    import Slider from "./JS/slider.js";
+
+    const slider = new Slider("#slider", {
+      prev: true, // boolean, default:true
+      next: true, // boolean, default:true
+      loop: true, // boolean, default:false
+      random: true, // boolean, default:false
+    });
+    console.log(slider, "12312");
+  </script>
+</html>
