@@ -9,10 +9,12 @@ const next = document.querySelector(".next");
 const width = 400;
 const margin = 100;
 const author = document.querySelector(".authors");
+let startPoint = 0;
+let endPoint = 0;
 
 let option = {};
 
-const array = [
+const slideList = [
   "<li><img src='./Contents/img1.png' alt='1' class='contents' /></li>",
 
   "<li><img src='./Contents/img2.png' alt='2' class='contents' /></li>",
@@ -25,12 +27,67 @@ const array = [
 
   "<li><video class='contents' autoplay loop controls><source src='./Contents/sample.mp4 ' type='video/mp4' /></video></li>",
 ];
+//순서 썪기
+const shuffle = (array) => {
+  array.sort(() => Math.random() - 0.5);
+  return array;
+};
+
+// 이벤트 제거 함수
+const removeEvent = () => {
+  prev.removeEventListener("click", prevHandlerForLoop);
+  prev.removeEventListener("click", prevHandler);
+  next.removeEventListener("click", nextHandlerForLoop);
+  next.removeEventListener("click", nextHandler);
+};
+/* =============================드래그 시작===============================*/
+const addDragEvent = () => {
+  slides.addEventListener("mousedown", (e) => {
+    startPoint = e.pageX;
+  });
+
+  slides.addEventListener("mouseup", (e) => {
+    endPoint = e.pageX;
+    if (startPoint < endPoint) {
+      if (option.loop) {
+        prevHandlerForLoop();
+      } else {
+        prevHandler();
+      }
+    } else if (startPoint > endPoint) {
+      if (option.loop) {
+        nextHandlerForLoop();
+      } else {
+        nextHandler();
+      }
+    }
+  });
+};
+
+/* =============================드래그 끝===============================*/
+
+/* =============================loop : off 시작===============================*/
 
 // 슬라이드 이동 (loop가 false일 때)
 const moveSlide = (idx) => {
   slides.style.left = -idx * (width + margin) + "px";
   currentIdx = idx;
 };
+
+//prevHandler, Loop=false
+const prevHandler = () => {
+  if (currentIdx !== firstIdx) moveSlide(currentIdx - 1);
+};
+
+//nexHandler, Loop=false
+const nextHandler = () => {
+  if (currentIdx !== lastIdx) {
+    moveSlide(currentIdx + 1);
+  }
+};
+/* =============================loop : off 끝===============================*/
+
+/* =============================loop : on 시작===============================*/
 
 //자연스럽게 보이기 위해서 처음과 끝에 가상 이미지 추가
 const setClone = () => {
@@ -78,29 +135,17 @@ const nextHandlerForLoop = () => {
   currentIdx += 1;
 };
 
-//prevHandler, Loop=false
-const prevHandler = () => {
-  if (currentIdx !== firstIdx) moveSlide(currentIdx - 1);
-};
+/* =============================loop : on 끝===============================*/
 
-//nexHandler, Loop=false
-const nextHandler = () => {
-  if (currentIdx !== lastIdx) {
-    moveSlide(currentIdx + 1);
-  }
-  console.log(currentIdx, "currentIdx");
-};
+/* =============================사용자 설정 컨트롤러 시작===============================*/
 
-//순서 썪기
-const shuffle = (array) => {
-  array.sort(() => Math.random() - 0.5);
-  return array;
-};
-
+//사용자 설정 핸들러
 const controlHandler = () => {
   const button = document.querySelector("#button").checked;
   const loop = document.querySelector("#loop").checked;
   const random = document.querySelector("#random").checked;
+  currentIdx = 0;
+
   option = {
     prev: button,
     next: button,
@@ -108,9 +153,25 @@ const controlHandler = () => {
     random: random,
   };
 
-  console.log(option, "1213213");
+  button && prev.addEventListener("click", prevHandler);
+  button && next.addEventListener("click", nextHandler);
+
+  if (option.random) {
+    slides.innerHTML = shuffle(slideList);
+  } else {
+    slides.innerHTML = slideList;
+  }
+
+  if (option.loop) {
+    setWidthForLoop();
+    setClone();
+    removeEvent();
+    button && prev.addEventListener("click", prevHandlerForLoop);
+    button && next.addEventListener("click", nextHandlerForLoop);
+  }
 };
 
+// 사용자 옵션 세팅 함수
 const setOption = (options) => {
   option = {
     prev: options.prev,
@@ -120,22 +181,11 @@ const setOption = (options) => {
   };
 };
 author.addEventListener("change", () => controlHandler());
+
+/* =============================사용자 설정 컨트롤러 끝===============================*/
 export default function slider(id, options) {
   setOption(options);
-
-  if (option.random) {
-    slides.innerHTML = shuffle(array);
-  }
-  if (option.loop) {
-    setWidthForLoop();
-    setClone();
-
-    prev.addEventListener("click", prevHandlerForLoop);
-    next.addEventListener("click", nextHandlerForLoop);
-    console.log("1");
-  } else {
-    option.prev && prev.addEventListener("click", prevHandler);
-    option.next && next.addEventListener("click", nextHandler);
-    console.log("2");
-  }
+  addDragEvent();
+  prev.addEventListener("click", prevHandler);
+  next.addEventListener("click", nextHandler);
 }

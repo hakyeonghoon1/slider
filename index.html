@@ -24,7 +24,7 @@
       <button class="prev">이전</button>
       <button class="next">다음</button>
     </div>
-    <div class="authors">
+    <div class="author">
       <label>
         버튼 활성화
         <input type="checkbox" id="button" class="authors" checked />
@@ -45,9 +45,8 @@
     const slider = new Slider("#slider", {
       prev: true, // boolean, default:true
       next: true, // boolean, default:true
-      loop: true, // boolean, default:false
-      random: true, // boolean, default:false
+      loop: false, // boolean, default:false
+      random: false, // boolean, default:false
     });
-    console.log(slider, "12312");
   </script>
 </html>

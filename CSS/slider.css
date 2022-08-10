@@ -24,6 +24,7 @@ li {
 
 .contents {
   width: 400px;
+  -webkit-user-drag: none;
 }
 
 .slides li:not(:last-child) {
